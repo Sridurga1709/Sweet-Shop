@@ -1,0 +1,26 @@
+{
+  "name": "sweetshop-playwright",
+  "version": "1.0.0",
+  "description": "Playwright automation framework for Sweet Shop demo",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:chrome": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:mobile": "playwright test --project=mobile-chrome",
+    "test:p1": "playwright test --grep @P1",
+    "test:navigation": "playwright test tests/navigation.spec.ts",
+    "test:login": "playwright test tests/login.spec.ts",
+    "test:basket": "playwright test tests/basket.spec.ts",
+    "test:checkout": "playwright test tests/checkout.spec.ts",
+    "test:responsive": "playwright test tests/responsive.spec.ts",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "@types/node": "^25.6.0",
+    "typescript": "^5.4.5"
+  }
+}
