@@ -7,17 +7,21 @@ test.describe('Navigation @P1', () => {
     const nav = new BasePage(page);
     await page.goto('/');
 
+    await nav.openMobileMenuIfNeeded();
     await nav.navSweets.click();
     await expect(page).toHaveURL('/sweets');
 
+    await nav.openMobileMenuIfNeeded();
     await nav.navAbout.click();
     await expect(page).toHaveURL('/about');
 
     // navigate back to check login
     await page.goto('/');
+    await nav.openMobileMenuIfNeeded();
     await nav.navLogin.click();
     await expect(page).toHaveURL('/login');
 
+    await nav.openMobileMenuIfNeeded();
     await nav.navBasket.click();
     await expect(page).toHaveURL('/basket');
   });

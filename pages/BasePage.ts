@@ -8,6 +8,7 @@ export class BasePage {
   readonly navBasket: Locator;
   readonly navLogo: Locator;
   readonly basketCounter: Locator;
+  readonly hamburgerToggle: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +18,25 @@ export class BasePage {
     this.navLogin = page.getByRole('link', { name: 'Login' });
     this.navBasket = page.locator('a[href="/basket"]');
     this.basketCounter = page.locator('a[href="/basket"]');
+    this.hamburgerToggle = page.locator('.navbar-toggler');
+  }
+
+  async openMobileMenuIfNeeded(): Promise<void> {
+    // Use getComputedStyle so CSS media queries are respected (avoids false positives on desktop)
+    const hamburgerRendered = await this.hamburgerToggle.evaluate((el: Element) =>
+      window.getComputedStyle(el).display !== 'none'
+    ).catch(() => false);
+
+    if (!hamburgerRendered) return;
+
+    // Ensure Bootstrap JS is initialised before interacting with the collapse
+    await this.page.waitForLoadState('domcontentloaded');
+    const menu = this.page.locator('.navbar-collapse');
+    const classes = await menu.getAttribute('class') ?? '';
+    if (!classes.includes('show')) {
+      await this.hamburgerToggle.click();
+      await expect(menu).toHaveClass(/show/, { timeout: 10000 });
+    }
   }
 
   async getBasketCount(): Promise<number> {
@@ -50,6 +70,7 @@ export class BasePage {
   }
 
   async isLoginLinkVisible(): Promise<boolean> {
+    await this.openMobileMenuIfNeeded();
     return this.navLogin.isVisible();
   }
 

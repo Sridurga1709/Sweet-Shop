@@ -10,6 +10,7 @@ test.describe('Home Page', () => {
     await expect(page).toHaveURL('/');
     await home.expectHeadingVisible();
     await expect(home.browseButton).toBeVisible();
+    await home.openMobileMenuIfNeeded();
     await expect(home.navSweets).toBeVisible();
     await expect(home.navBasket).toBeVisible();
   });

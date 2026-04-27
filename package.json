@@ -15,6 +15,7 @@
     "test:login": "playwright test tests/login.spec.ts",
     "test:basket": "playwright test tests/basket.spec.ts",
     "test:checkout": "playwright test tests/checkout.spec.ts",
+    "test:about": "playwright test tests/about.spec.ts",
     "test:responsive": "playwright test tests/responsive.spec.ts",
     "report": "playwright show-report"
   },

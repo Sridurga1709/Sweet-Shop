@@ -2,13 +2,15 @@ import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class AboutPage extends BasePage {
-  readonly promoBanner: Locator;
-  readonly pageContent: Locator;
+  readonly pageHeading: Locator;
+  readonly pageDescription: Locator;
+  readonly pageFooter: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.promoBanner = page.getByText(/20% off/i);
-    this.pageContent = page.locator('main, .container').first();
+    this.pageHeading = page.getByRole('heading', { name: 'Sweet Shop Project' });
+    this.pageDescription = page.getByText(/intentionally broken web application/i);
+    this.pageFooter = page.getByText(/Sweet Shop Project 2018/i);
   }
 
   async navigate(): Promise<void> {
@@ -16,11 +18,7 @@ export class AboutPage extends BasePage {
     await this.page.waitForLoadState('domcontentloaded');
   }
 
-  async expectPromoBannerVisible(): Promise<void> {
-    await expect(this.promoBanner).toBeVisible();
-  }
-
   async expectContentLoaded(): Promise<void> {
-    await expect(this.pageContent).toBeVisible();
+    await expect(this.pageHeading).toBeVisible();
   }
 }
